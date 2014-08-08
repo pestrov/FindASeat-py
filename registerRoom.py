@@ -1,22 +1,4 @@
-import json, httplib
-
-def credentials():
-  return {
-    "X-Parse-Application-Id": "Bvvlzr8qEBylzyQ9J4rmpul9iqZS3KZwZ1AbC4Hh",
-    "X-Parse-REST-API-Key": "m7DPeMctrrlQvWFglna4FnKQUVBjilqXCq84CCte",
-    "Content-Type": "application/json"
-  }
-
-def parseBatchLimit():
-  return 50
-
-def sendParseRequest(requestType, path, data):
-  print data
-  connection = httplib.HTTPSConnection('api.parse.com', 443)
-  connection.connect()
-  connection.request(requestType, path, data, credentials())
-  result = json.loads(connection.getresponse().read())
-  return result
+import parseHelper, json
 
 #Reading the info formed by CV algorithm
 def readRoomInfo():
@@ -45,7 +27,7 @@ def attachRoomToSeats(seatResults, roomId):
                               })
   print "add"
   print updateSeatsBatch
-  result = sendParseRequest("PUT", "/1/classes/Room/" + roomId, json.dumps({"seats":{
+  result = parseHelper.sendParseRequest("PUT", "/1/classes/Room/" + roomId, json.dumps({"seats":{
                                                           "__op":"AddRelation",
                                                           "objects":updateSeatsBatch
                                                           }
@@ -68,7 +50,7 @@ def seatInfoForParse(seat):
   }
 
 def sendSeatsInfo(seatsBatch):
-  return sendParseRequest('POST', '/1/batch', json.dumps({
+  return parseHelper.sendParseRequest('POST', '/1/batch', json.dumps({
        "requests":seatsBatch}))
 
 def createSeats(seats, roomId):
@@ -76,7 +58,7 @@ def createSeats(seats, roomId):
   for seat in seats:
     seatsBatch.append(seatInfoForParse(seat))
 
-    if len(seatsBatch) == parseBatchLimit():
+    if len(seatsBatch) == parseHelper.parseBatchLimit():
       seatResults = sendSeatsInfo(seatsBatch)
       attachRoomToSeats(seatResults, roomId)
       seatsBatch = []
@@ -86,7 +68,7 @@ def createSeats(seats, roomId):
     attachRoomToSeats(seatResults, roomId)
 
 def createRoom(roomInfo):
-  result = sendParseRequest('POST', '/1/classes/Room', json.dumps({
+  result = parseHelper.sendParseRequest('POST', '/1/classes/Room', json.dumps({
        "width": roomInfo["size"][0],
        "height": roomInfo["size"][1]
      }))
