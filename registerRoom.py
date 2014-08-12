@@ -29,7 +29,7 @@ def attachRoomToSeats(seatResults, roomId):
   print result
 
 
-def seatInfoForParse(seat):
+def seatInfoForParse(seat, roomId):
   return {
   "method":"POST",
   "path":"/1/classes/Seat",
@@ -39,7 +39,8 @@ def seatInfoForParse(seat):
     "x":seat["position"][0],
     "y":seat["position"][1],
     "width":seat["size"][0],
-    "height":seat["size"][1]
+    "height":seat["size"][1],
+    "roomId":roomId
     }
   }
 
@@ -50,7 +51,7 @@ def sendSeatsInfo(seatsBatch):
 def createSeats(seats, roomId):
   seatsBatch = []
   for seat in seats:
-    seatsBatch.append(seatInfoForParse(seat))
+    seatsBatch.append(seatInfoForParse(seat, roomId))
 
     if len(seatsBatch) == parseHelper.parseBatchLimit():
       seatResults = sendSeatsInfo(seatsBatch)

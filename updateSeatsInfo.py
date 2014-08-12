@@ -1,4 +1,4 @@
-import parseHelper, json
+import parseHelper, json, urllib
 
 def getSeatsOrigins(roomInfo):
   seats = []
@@ -31,14 +31,38 @@ def splitSeats(initialOrigins, currentOrigins):
 
   return (vacantSeats, occupiedSeats)
 
-def updateRoomInfo():
+def seatInfoToUpdate(seat, state):
+  return {
+  "method":"PUT",
+  "path":"/1/classes/Seat/%s" % seat,
+  "body":{
+    "vacant":state
+    }
+  }
+
+def updateSeatsState(seatsIds, state, roomId):
+
+  params = urllib.urlencode({"where":json.dumps({"roomId":roomId}),
+                              "order":"seatID"})
+  seats = parseHelper.sendParseRequest('GET','/1/classes/Seat?%s' % params, '')
+  print seatsIds
+  seatsBatch = []
+  for seat in seatsIds:
+    seatsBatch.append(seatInfoToUpdate(seats["results"][seat]["objectId"], state))
+  result = parseHelper.sendParseRequest('POST', '/1/batch', json.dumps({
+       "requests":seatsBatch}))
+  print result
+  print seatsBatch
+
+def updateRoomInfo(roomId):
   initialRoomInfo = parseHelper.readRoomInfo('./data/initialRoomSetup.json')
   initialOrigins = getSeatsOrigins(initialRoomInfo)
 
   currentRoomInfo = parseHelper.readRoomInfo('./data/currentRoomSetup.json')
   currentOrigins = getSeatsOrigins(currentRoomInfo)
   splittedSeats = splitSeats(initialOrigins, currentOrigins)
-
+  updateSeatsState(splittedSeats[0], True, roomId)
+  updateSeatsState(splittedSeats[1], False, roomId)
   print splittedSeats
 
-updateRoomInfo()
+updateRoomInfo("QHzp9TbTJO")

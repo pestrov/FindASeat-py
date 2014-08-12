@@ -1,7 +1,7 @@
 import parseHelper, json
 def createBeacon():
   result = parseHelper.sendParseRequest('POST','/1/classes/Entrance', json.dumps({
-       "entranceNumber": "1",
+       "entranceNumber": 1,
        "x": 100,
        "y": 150
      }))
@@ -14,7 +14,6 @@ def createBeacon():
   return False
 
 def bindBeaconsToRoom(roomId):
-  roomId = "el3DyZD4b2"
   createdBeaconId = createBeacon()
   print "Started"
   parseHelper.sendParseRequest("PUT", "/1/classes/Entrance/" + createdBeaconId,
@@ -31,4 +30,4 @@ def bindBeaconsToRoom(roomId):
        }
        }))
 
-bindBeaconsToRoom(100)
+bindBeaconsToRoom("QHzp9TbTJO")
