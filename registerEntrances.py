@@ -30,4 +30,4 @@ def bindBeaconsToRoom(roomId):
        }
        }))
 
-bindBeaconsToRoom("QHzp9TbTJO")
+bindBeaconsToRoom("aF4yoi7HZy")

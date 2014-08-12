@@ -65,4 +65,4 @@ def updateRoomInfo(roomId):
   updateSeatsState(splittedSeats[1], False, roomId)
   print splittedSeats
 
-updateRoomInfo("QHzp9TbTJO")
+updateRoomInfo("aF4yoi7HZy")
