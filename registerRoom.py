@@ -1,11 +1,5 @@
 import parseHelper, json
 
-#Reading the info formed by CV algorithm
-def readRoomInfo():
-  with open('./data/room.json') as fp:
-    roomInfo = json.load(fp)
-  return roomInfo
-
 def getSeatsIds(seatResults):
   seatsIds = []
   for seat in seatResults:
@@ -77,7 +71,7 @@ def createRoom(roomInfo):
 #Making a request to PARSE server
 
 def registerRoom():
-  roomInfo = readRoomInfo()
+  roomInfo = parseHelper.readRoomInfo('./data/initialRoomSetup.json')
   roomId = createRoom(roomInfo)
   for topKey, topValue in roomInfo.iteritems():
     if topKey == "seats":

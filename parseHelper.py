@@ -17,3 +17,10 @@ def sendParseRequest(requestType, path, data):
   connection.request(requestType, path, data, credentials())
   result = json.loads(connection.getresponse().read())
   return result
+
+
+#Reading the info formed by CV algorithm
+def readRoomInfo(filePath):
+  with open(filePath) as fp:
+    roomInfo = json.load(fp)
+  return roomInfo

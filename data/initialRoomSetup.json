@@ -1,0 +1,97 @@
+{
+    "seats": [
+        {
+            "number": 1,
+            "position": [
+                10,
+                20
+            ],
+            "size": [
+                10,
+                20
+            ]
+        },
+        {
+            "number": 2,
+            "position": [
+                10,
+                100
+            ],
+            "size": [
+                10,
+                20
+            ]
+        },
+        {
+            "number": 3,
+            "position": [
+                11,
+                20
+            ],
+            "size": [
+                10,
+                20
+            ]
+        },
+        {
+            "number": 5,
+            "position": [
+                10,
+                102
+            ],
+            "size": [
+                10,
+                20
+            ]
+        },
+        {
+            "number": 6,
+            "position": [
+                20,
+                20
+            ],
+            "size": [
+                10,
+                20
+            ]
+        },
+        {
+            "number": 7,
+            "position": [
+                10,
+                110
+            ],
+            "size": [
+                10,
+                20
+            ]
+        },
+        {
+            "number": 8,
+            "position": [
+                60,
+                20
+            ],
+            "size": [
+                10,
+                20
+            ]
+        },
+        {
+            "number": 9,
+            "position": [
+                100,
+                100
+            ],
+            "size": [
+                10,
+                20
+            ]
+        }
+    ],
+    "size": [
+        300,
+        500
+    ],
+    "roomId":"el3DyZD4b2"
+}
