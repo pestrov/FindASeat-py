@@ -9,7 +9,7 @@ def getSeatsOrigins(roomInfo):
   return seats
 
 def originsMatch(initialOrigin, currentOrigin):
-  if (initialOrigin[0] == currentOrigin[0]) & (initialOrigin[1] == currentOrigin[1]):
+  if (abs(initialOrigin[0] - currentOrigin[0]) < 5) & (abs(initialOrigin[1] - currentOrigin[1]) < 5):
     return True
 
 def splitSeats(initialOrigins, currentOrigins):
