@@ -1,4 +1,4 @@
-import parseHelper, json
+import parseHelper, json, registerEntrances
 
 def getSeatsIds(seatResults):
   seatsIds = []
@@ -29,17 +29,18 @@ def attachRoomToSeats(seatResults, roomId):
   print result
 
 
-def seatInfoForParse(seat, roomId):
+def seatInfoForParse(seat, roomId, number):
   return {
   "method":"POST",
   "path":"/1/classes/Seat",
   "body":{
-    "seatID":seat["number"],
+    "seatID":number,
     "vacant":False,
     "x":seat["position"][0],
     "y":seat["position"][1],
     "width":seat["size"][0],
     "height":seat["size"][1],
+    "rowID":seat["rowID"],
     "roomId":roomId
     }
   }
@@ -51,7 +52,7 @@ def sendSeatsInfo(seatsBatch):
 def createSeats(seats, roomId):
   seatsBatch = []
   for seat in seats:
-    seatsBatch.append(seatInfoForParse(seat, roomId))
+    seatsBatch.append(seatInfoForParse(seat, roomId, seats.index(seat)))
 
     if len(seatsBatch) == parseHelper.parseBatchLimit():
       seatResults = sendSeatsInfo(seatsBatch)
@@ -68,12 +69,17 @@ def createRoom(roomInfo):
        "height": roomInfo["size"][1]
      }))
   roomId = result["objectId"]
+
+  with open('./data/roomId.json', 'w') as outfile:
+    json.dump({"roomId":roomId}, outfile)
+
   return roomId
 #Making a request to PARSE server
 
 def registerRoom():
   roomInfo = parseHelper.readRoomInfo('./data/initialRoomSetup.json')
   roomId = createRoom(roomInfo)
+  registerEntrances.bindBeaconsToRoom(roomId)
   for topKey, topValue in roomInfo.iteritems():
     if topKey == "seats":
       createSeats(topValue, roomId)

@@ -1,7 +1,7 @@
 import parseHelper, json
 def createBeacon():
   result = parseHelper.sendParseRequest('POST','/1/classes/Entrance', json.dumps({
-       "entranceNumber": 1,
+       "entranceNumber": 100001,
        "x": 100,
        "y": 150
      }))
@@ -29,5 +29,3 @@ def bindBeaconsToRoom(roomId):
          ]
        }
        }))
-
-bindBeaconsToRoom("aF4yoi7HZy")

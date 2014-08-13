@@ -54,7 +54,9 @@ def updateSeatsState(seatsIds, state, roomId):
   print result
   print seatsBatch
 
-def updateRoomInfo(roomId):
+def updateRoomInfo():
+  roomId = parseHelper.readRoomInfo('./data/roomId.json')["roomId"]
+
   initialRoomInfo = parseHelper.readRoomInfo('./data/initialRoomSetup.json')
   initialOrigins = getSeatsOrigins(initialRoomInfo)
 
@@ -65,4 +67,4 @@ def updateRoomInfo(roomId):
   updateSeatsState(splittedSeats[1], False, roomId)
   print splittedSeats
 
-updateRoomInfo("aF4yoi7HZy")
+updateRoomInfo()
