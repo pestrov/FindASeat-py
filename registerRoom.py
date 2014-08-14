@@ -52,7 +52,7 @@ def sendSeatsInfo(seatsBatch):
 def createSeats(seats, roomId):
   seatsBatch = []
   for seat in seats:
-    seatsBatch.append(seatInfoForParse(seat, roomId, seats.index(seat)))
+    seatsBatch.append(seatInfoForParse(seat, roomId, seats.index(seat)+1))
 
     if len(seatsBatch) == parseHelper.parseBatchLimit():
       seatResults = sendSeatsInfo(seatsBatch)
