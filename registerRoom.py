@@ -35,7 +35,7 @@ def seatInfoForParse(seat, roomId, number):
   "path":"/1/classes/Seat",
   "body":{
     "seatID":number,
-    "vacant":False,
+    "vacant":True,
     "x":seat["position"][0],
     "y":seat["position"][1],
     "width":seat["size"][0],

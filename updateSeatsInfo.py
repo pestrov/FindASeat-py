@@ -49,10 +49,16 @@ def updateSeatsState(seatsIds, state, roomId):
   seatsBatch = []
   for seat in seatsIds:
     seatsBatch.append(seatInfoToUpdate(seats["results"][seat]["objectId"], state))
-  result = parseHelper.sendParseRequest('POST', '/1/batch', json.dumps({
+    if len(seatsBatch) == parseHelper.parseBatchLimit():
+      result = parseHelper.sendParseRequest('POST', '/1/batch', json.dumps({
        "requests":seatsBatch}))
-  print result
-  print seatsBatch
+      seatsBatch = []
+      print result
+
+  if len(seatsBatch) > 0:
+    result = parseHelper.sendParseRequest('POST', '/1/batch', json.dumps({
+       "requests":seatsBatch}))
+    print result
 
 def updateRoomInfo():
   roomId = parseHelper.readRoomInfo('./data/roomId.json')["roomId"]
